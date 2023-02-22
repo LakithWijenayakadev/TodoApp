@@ -1,5 +1,7 @@
 const Colors = {
 
+    // Basic Colors
+
     light: '#FEFBF3',
     black: "#000000",
     darkPurple: "#65647C",

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, Image, Dimensions, Alert, StatusBar, StyleSheet, Text, TouchableOpacity, View, FlatList } from "react-native";
-import Fonts from "../styles/Fonts";
+import { SafeAreaView, ScrollView, Image, Dimensions, Alert, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../styles/Colors";
 import PencilIcon from "./../icons/pencil.png"
 import DeleteIcon from "./../icons/delete.png"
@@ -11,7 +10,6 @@ import { SettodoListItems, SethaveTodos } from './../../redux/TodoListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Settopic, Setdescriptin, Setcolor, SetupdateId, Setdate, SetSelectedIndex, SetupdateItem } from './../../redux/CreateTodoSlice';
 import { ActivityIndicator } from "react-native-paper";
-const window = Dimensions.get('window');
 
 
 function ViewTodo({ navigation }) {
@@ -34,8 +32,6 @@ function ViewTodo({ navigation }) {
         navigation.navigate("UpdateTodo");
     }
 
-
-
     function deleteItem() {
         Alert.alert('Delete..?', 'You cant undo this..', [
             {
@@ -55,6 +51,7 @@ function ViewTodo({ navigation }) {
         dispatch(SettodoListItems(Array));
 
         setTimeout(function () {
+
             navigation.navigate('TodoList');
 
             setTimeout(function () {
@@ -84,20 +81,22 @@ function ViewTodo({ navigation }) {
     };
 
 
-
     if (Indicator == true) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: theme === 'light' ? Colors.light : Colors.black }}>
-                <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
-
-
+                <StatusBar
+                    backgroundColor={theme === 'light' ? Colors.light : Colors.black}
+                    barStyle={theme === 'light' ? "dark-content" : "light-content"} />
                 <ActivityIndicator size={50} color={Colors.brown} />
             </SafeAreaView>
         );
     } else {
         return (
             <SafeAreaView style={[Styles.safeArea, { backgroundColor: theme == 'light' ? Colors.light : Colors.black }]}>
-                <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
+                <StatusBar
+                    backgroundColor={theme === 'light' ? Colors.light : Colors.black}
+                    barStyle={theme === 'light' ? "dark-content" : "light-content"} />
+
                 {/* Todo Page Heading */}
 
                 <ViewTodoHeading
@@ -106,12 +105,13 @@ function ViewTodo({ navigation }) {
 
                 <ScrollView fadingEdgeLength={50}>
                     <View style={{ marginTop: 10 }}>
-                        <View style={{ backgroundColor: Colors.notepad, minHeight: (window.height) * 0.6, marginHorizontal: 20, borderRadius: 15, padding: 10, borderWidth: 1.5, elevation: 10, borderColor: TodoItem.Color }}>
-                            <Text style={{ fontSize: 15, fontFamily: Fonts.Bold, color: Colors.darkFont, textAlign: 'justify' }}>{TodoItem.Description}</Text>
+                        <View style={[Styles.descriptionWrap, { borderColor: TodoItem.Color }]}>
+                            <Text style={Styles.descriptionText}>{TodoItem.Description}</Text>
                         </View>
 
                     </View>
                     <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20 }}>
+
                         <View style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                             <TouchableOpacity onPress={() => updateItem()} style={Styles.pencilIcon}>
                                 <Image source={PencilIcon} style={Styles.smallPencil}></Image>

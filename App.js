@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, Text, StatusBar } from 'react-native';
+import React, { useEffect } from 'react'
+import { StatusBar } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,7 +15,6 @@ import CreateTodo from './src/screens/CreateTodo';
 import UpdateTodo from './src/screens/UpdateTodo';
 
 const Stack = createNativeStackNavigator();
-const window = Dimensions.get('window');
 console.disableYellowBox = true;
 
 const App = () => {

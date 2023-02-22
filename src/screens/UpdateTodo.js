@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, Image, TextInput, Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View, FlatList, Alert } from "react-native";
+import { SafeAreaView, ScrollView, Image, TextInput, Dimensions, StatusBar, Text, TouchableOpacity, View, Alert } from "react-native";
 import Colors from "../styles/Colors";
 import DeleteIcon from "./../icons/delete.png"
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import CreateTodoHeading from "../components/CreateTodoHeading";
-import { Settopic, Setdescriptin, Setcolor, Setdate, SetSelectedIndex, SetupdateItem } from './../../redux/CreateTodoSlice';
+import { Settopic, Setdescriptin, Setcolor, Setdate, SetSelectedIndex } from './../../redux/CreateTodoSlice';
 import { SettodoListItems, SethaveTodos } from './../../redux/TodoListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from "react-native-paper";
 import moment from "moment/moment";
 
-const window = Dimensions.get('window');
 
 function UpdateTodo({ navigation }) {
 
@@ -22,12 +21,8 @@ function UpdateTodo({ navigation }) {
     const ColorList = useSelector(state => state.CreateTodo.ColorList)
     const date = useSelector(state => state.CreateTodo.date)
     const updateId = useSelector(state => state.CreateTodo.updateId)
-    const updateItem = useSelector(state => state.CreateTodo.updateItem)
     const [Indicator, setIndicator] = useState(false);
     const theme = useSelector(state => state.Theme.theme)
-
-
-
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -70,7 +65,6 @@ function UpdateTodo({ navigation }) {
             );
         } else {
             UpdateTodo();
-            // CreateTodo()
         }
 
     }
@@ -86,18 +80,17 @@ function UpdateTodo({ navigation }) {
                     Date: date,
                     Color: ColorList[SelectedIndex].Color,
                     ColorIndex: SelectedIndex
-
                 };
             }
-
             return obj;
         });
+
         dispatch(SettodoListItems(newArr));
         dispatch(SethaveTodos(true));
 
         setTimeout(function () {
-            dispatch(SetSelectedIndex(0))
 
+            dispatch(SetSelectedIndex(0))
             navigation.navigate("TodoList");
 
             setTimeout(function () {
@@ -105,10 +98,8 @@ function UpdateTodo({ navigation }) {
             }, 500);
 
         }, 1000);
-        console.log("ffffffffffff", newArr);
+
     }
-
-
 
     useEffect(() => {
         saveToLocale();
@@ -121,7 +112,6 @@ function UpdateTodo({ navigation }) {
         } catch (error) {
             console.log(error);
         }
-
     };
 
 
@@ -130,13 +120,10 @@ function UpdateTodo({ navigation }) {
             <View style={{ flexDirection: "row" }}>
                 {ColorList.map((item, index) => (
 
-                    <TouchableOpacity onPress={() => handleColor(index)} style={{ marginHorizontal: 5, borderRadius: 100, borderWidth: 3, borderColor: SelectedIndex == index ? Colors.orange : item.Color, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => handleColor(index)}
+                        style={[Styles.colorButtons, { borderColor: SelectedIndex == index ? Colors.orange : item.Color }]}>
                         <View style={
-                            [Styles.selectColor,
-                            {
-                                backgroundColor: item.Color,
-                            }
-                            ]
+                            [Styles.selectColor, { backgroundColor: item.Color }]
                         }></View>
                     </TouchableOpacity>
 
@@ -148,16 +135,18 @@ function UpdateTodo({ navigation }) {
     if (Indicator == true) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: theme === 'light' ? Colors.light : Colors.black }}>
-                <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
-
-
+                <StatusBar
+                    backgroundColor={theme === 'light' ? Colors.light : Colors.black}
+                    barStyle={theme === 'light' ? "dark-content" : "light-content"} />
                 <ActivityIndicator size={50} color={Colors.brown} />
             </SafeAreaView>
         );
     } else {
         return (
             <SafeAreaView style={[Styles.safeArea, { backgroundColor: theme == 'light' ? Colors.light : Colors.black }]}>
-                <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
+                <StatusBar
+                    backgroundColor={theme === 'light' ? Colors.light : Colors.black}
+                    barStyle={theme === 'light' ? "dark-content" : "light-content"} />
                 {/* Todo Page Heading */}
 
                 <CreateTodoHeading

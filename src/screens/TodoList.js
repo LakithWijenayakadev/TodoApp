@@ -1,48 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Logo from "./../logo/logo.png"
-import { SafeAreaView, ScrollView, Image, Dimensions, StatusBar, ActivityIndicator, StyleSheet, Animated, Text, TouchableOpacity, View, FlatList } from "react-native";
-import Fonts from "../styles/Fonts";
-import Colors from "../styles/Colors";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
-import PencilIcon from "./../icons/pencil.png"
+import { SafeAreaView, Dimensions, StatusBar, ActivityIndicator, Animated, View, FlatList } from "react-native";
 import { Styles } from "../styles/Styles";
-import TodoHeading from "../components/TodoHeading";
-import NoTodoPage from "../components/NoTodoPage";
-import TodoItem from "../components/TodoItem";
 import { useDispatch, useSelector } from "react-redux";
 import { FAB } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SettodoListItems, SethaveTodos } from './../../redux/TodoListSlice';
 import { SetTodoData } from './../../redux/ViewTodoSlice';
 import { SetSelectedIndex } from './../../redux/CreateTodoSlice';
 import { Settheme } from './../../redux/ThemeSlice';
-
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import TodoHeading from "../components/TodoHeading";
+import NoTodoPage from "../components/NoTodoPage";
+import TodoItem from "../components/TodoItem";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from "../styles/Colors";
 
 const window = Dimensions.get('window');
 
 
 function TodoList({ navigation }) {
 
-
     const TodoListItems = useSelector(state => state.TodoList.todoListItems)
     const haveTodos = useSelector(state => state.TodoList.haveTodos)
     const theme = useSelector(state => state.Theme.theme)
     const [Indicator, setIndicator] = useState(true);
-    console.log("the", theme);
     const fadeAnim = useRef(new Animated.Value(1)).current;
     const dispatch = useDispatch()
+    changeNavigationBarColor(theme == 'light' ? Colors.lightBrown : Colors.black, false);
+
 
     useEffect(() => {
         AsyncStorage.getItem('TodoList').then(value => {
             if ((value == null) || (value.length == 2)) {
                 dispatch(SethaveTodos(false))
-                console.log("first time", value);
+
             } else {
                 AsyncStorage.setItem('TodoList', value);
                 dispatch(SethaveTodos(true))
                 dispatch(SettodoListItems(JSON.parse(value)));
-                console.log("iteems list", value.length);
             }
         });
 
@@ -70,7 +64,7 @@ function TodoList({ navigation }) {
     }
 
     function viewTodo(index) {
-        console.log("data", index);
+
         dispatch(SetTodoData(index));
         navigation.navigate("ViewTodo")
     }
@@ -81,7 +75,7 @@ function TodoList({ navigation }) {
     }
 
     const fadeIn = () => {
-        // Will change fadeAnim value to 1 in 5 seconds
+        // Will change fadeAnim value to 1 in 1 seconds
         Animated.timing(fadeAnim, {
             toValue: 1,
             duration: 1000,
@@ -90,7 +84,7 @@ function TodoList({ navigation }) {
     };
 
     const fadeOut = () => {
-        // Will change fadeAnim value to 0 in 3 seconds
+        // Will change fadeAnim value to 0 in 0.5 seconds
         Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 500,
@@ -99,7 +93,7 @@ function TodoList({ navigation }) {
     };
 
     function ThemeSwitch() {
-        console.log("ggg");
+
         if (theme === 'light') {
             fadeOut();
 
@@ -122,8 +116,6 @@ function TodoList({ navigation }) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: theme === 'light' ? Colors.light : Colors.black }}>
                 <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
-
-
                 <ActivityIndicator size={50} color={Colors.brown} />
             </SafeAreaView>
         );
@@ -131,12 +123,12 @@ function TodoList({ navigation }) {
         return (
             <SafeAreaView style={[Styles.safeArea, { backgroundColor: theme === 'light' ? Colors.light : Colors.black }]}>
                 <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
+
                 {/* Todo Page Heading */}
 
                 <TodoHeading
                     onPress={() => ThemeSwitch()}
                     opacity={fadeAnim} />
-
 
                 {/* When don't have todo's */}
                 {haveTodos == false &&
@@ -145,12 +137,11 @@ function TodoList({ navigation }) {
                 }
 
                 {haveTodos == true &&
-                    <View style={{ marginTop: 40, flex: 1, }}>
+                    <View style={{ marginTop: (window.height) * 0.05, flex: 1 }}>
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             data={TodoListItems}
                             fadingEdgeLength={30}
-
                             renderItem={({ item, index }) => <TodoItem
                                 Title={item.Topic}
                                 CreateDate={item.Date}
@@ -164,25 +155,15 @@ function TodoList({ navigation }) {
                     </View>
                 }
                 <FAB
-                    style={styles.fab}
+                    style={Styles.fab}
                     small
                     icon="plus"
                     color={Colors.light}
-
                     onPress={() => CreateTodo()}
                 />
             </SafeAreaView>
         );
     }
 }
-const styles = StyleSheet.create({
-    fab: {
-        position: 'absolute',
-        margin: 16,
-        right: 12,
-        bottom: 0,
-        backgroundColor: "#525E75"
-    },
-})
 
 export default TodoList;

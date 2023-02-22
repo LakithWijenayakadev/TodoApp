@@ -1,11 +1,6 @@
 import * as React from "react";
-import { TouchableOpacity, Dimensions, ScrollView, Text, View, Image } from "react-native";
-
-import Colors from "../styles/Colors";
-import Fonts from "../styles/Fonts";
+import { TouchableOpacity, Dimensions,  Text, View, Image } from "react-native";
 import { Styles } from "../styles/Styles";
-
-const window = Dimensions.get('window');
 
 
 export default function TodoItem({ Title, CreateDate, Description, SelectedColor, onPress }) {

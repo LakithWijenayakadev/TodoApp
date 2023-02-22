@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, Image, TextInput, Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View, FlatList, Alert } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { SafeAreaView, ScrollView, Image, TextInput, Dimensions, StatusBar, Text, TouchableOpacity, View, Alert } from "react-native";
 import Colors from "../styles/Colors";
 import DeleteIcon from "./../icons/delete.png"
 import { Styles } from "../styles/Styles";
@@ -8,11 +8,9 @@ import CreateTodoHeading from "../components/CreateTodoHeading";
 import { Settopic, Setdescriptin, Setcolor, Setdate, SetSelectedIndex, SetupdateItem } from './../../redux/CreateTodoSlice';
 import { SettodoListItems, SethaveTodos } from './../../redux/TodoListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import moment from "moment/moment";
 import { ActivityIndicator } from "react-native-paper";
 
-const window = Dimensions.get('window');
 
 function CreateTodo({ navigation }) {
 
@@ -85,12 +83,12 @@ function CreateTodo({ navigation }) {
             ColorIndex: SelectedIndex
         };
 
-        dispatch(SettodoListItems([...TodoListItems, newDataArray]));
+        dispatch(SettodoListItems([newDataArray].concat(TodoListItems)));
         dispatch(SethaveTodos(true));
 
         setTimeout(function () {
-            dispatch(SetSelectedIndex(0))
 
+            dispatch(SetSelectedIndex(0))
             navigation.navigate("TodoList");
 
             setTimeout(function () {
@@ -98,8 +96,6 @@ function CreateTodo({ navigation }) {
             }, 500);
 
         }, 500);
-
-
 
     }
 
@@ -113,7 +109,6 @@ function CreateTodo({ navigation }) {
         } catch (error) {
             console.log(error);
         }
-
     };
 
 
@@ -122,13 +117,10 @@ function CreateTodo({ navigation }) {
             <View style={{ flexDirection: "row" }}>
                 {ColorList.map((item, index) => (
 
-                    <TouchableOpacity onPress={() => handleColor(index)} style={{ marginHorizontal: 5, borderRadius: 100, borderWidth: 3, borderColor: SelectedIndex == index ? Colors.orange : item.Color, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => handleColor(index)}
+                        style={[Styles.colorButtons, { borderColor: SelectedIndex == index ? Colors.orange : item.Color}]}>
                         <View style={
-                            [Styles.selectColor,
-                            {
-                                backgroundColor: item.Color,
-                            }
-                            ]
+                            [Styles.selectColor,{backgroundColor: item.Color}]
                         }></View>
                     </TouchableOpacity>
 
@@ -141,8 +133,6 @@ function CreateTodo({ navigation }) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: theme === 'light' ? Colors.light : Colors.black }}>
                 <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
-
-
                 <ActivityIndicator size={50} color={Colors.brown} />
             </SafeAreaView>
         );
@@ -150,11 +140,11 @@ function CreateTodo({ navigation }) {
         return (
             <SafeAreaView style={[Styles.safeArea, { backgroundColor: theme == 'light' ? Colors.light : Colors.black }]}>
                 <StatusBar backgroundColor={theme === 'light' ? Colors.light : Colors.black} barStyle={theme === 'light' ? "dark-content" : "light-content"} />
+
                 {/* Todo Page Heading */}
 
-
                 <CreateTodoHeading
-                    Topic={"Create new note."} />
+                    Topic={"Create new Todo."} />
 
                 <ScrollView fadingEdgeLength={50}>
 
@@ -166,12 +156,12 @@ function CreateTodo({ navigation }) {
                                 multiline
                                 value={topic}
                                 numberOfLines={2}
+                                autoFocus={true}
                                 maxLength={50}
                                 onChangeText={(value) => handleTopic(value)}
                                 style={Styles.topicInput}>
                             </TextInput>
                         </View>
-
 
                         <View style={Styles.descriptionBackground}>
                             <TextInput

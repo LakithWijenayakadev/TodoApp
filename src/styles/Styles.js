@@ -32,9 +32,14 @@ export const Styles = StyleSheet.create({
         Colors: Colors.darkFont
     },
     noTodoView: {
+        flex: 1,
+    },
+    fab: {
         position: 'absolute',
-        height: (window.height) * 1,
-        width: (window.width) * 1
+        margin: 16,
+        right: 12,
+        bottom: 0,
+        backgroundColor: "#525E75"
     },
     mainView: {
         flex: 1,
@@ -58,7 +63,8 @@ export const Styles = StyleSheet.create({
     firstTodoText: {
         textAlign: 'center',
         fontFamily: Fonts.Bold,
-        color: Colors.darkFont
+        color: Colors.darkFont,
+        marginBottom: 100
     },
 
     // Todo Items List
@@ -82,22 +88,25 @@ export const Styles = StyleSheet.create({
         fontFamily: Fonts.Bold,
         color: Colors.light,
         fontSize: 26,
+        flex: 0.75
     },
     tileDate: {
         fontFamily: Fonts.Bold,
         fontSize: 11,
         color: Colors.light,
+        flex: 0.25,
+        textAlign: 'right'
     },
     tileDescription: {
         color: Colors.light,
-        fontFamily: Fonts.Bold,
+        fontFamily: Fonts.Regular,
         fontSize: 15,
         marginBottom: 5,
         marginHorizontal: 8
     },
     openTodoTopic: {
         marginHorizontal: 10,
-        fontSize: 24,
+        fontSize: 26,
         color: Colors.darkFont,
         fontFamily: Fonts.Bold,
     },
@@ -144,11 +153,23 @@ export const Styles = StyleSheet.create({
     headingMain: {
         height: 100,
         justifyContent: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+    },
+    TodoListheadingMain: {
+        height: 100,
+        justifyContent: 'center',
+        paddingHorizontal: 20,
+        marginTop: (window.height) * 0.05
     },
     headingSubWrap: {
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    themeIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20,
+        height: 55, width: 55,
     },
 
     // CreateTodo
@@ -158,21 +179,28 @@ export const Styles = StyleSheet.create({
         width: (window.width) * 0.065,
         borderRadius: 100,
     },
+    colorButtons: {
+        marginHorizontal: 5,
+        borderRadius: 100,
+        borderWidth: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     topicInput: {
         textAlign: "justify",
         backgroundColor: "transparent",
-        fontSize: (window.width) * 0.055,
+        fontSize: (window.width) * 0.053,
         fontFamily: Fonts.Bold,
         color: Colors.darkFont,
         textAlign: 'justify'
     },
     descriptionInput: {
-        textAlign: "justify",
         fontSize: (window.width) * 0.05,
         fontFamily: Fonts.Bold,
         color: Colors.darkFont,
         textAlign: 'justify',
-        maxHeight: (window.height) * 0.59,
+        minHeight: (window.height) * 0.47,
+        textAlignVertical: 'top'
     },
     topicBackground: {
         backgroundColor: Colors.notepad,
@@ -180,15 +208,17 @@ export const Styles = StyleSheet.create({
         marginHorizontal: 20,
         borderRadius: 15,
         paddingHorizontal: 10,
-        marginBottom: 25
+        marginBottom: 25,
+        marginTop: (window.height) * 0.03
     },
     descriptionBackground: {
         backgroundColor: Colors.notepad,
         elevation: 5,
-        minHeight: (window.height) * 0.59,
+        minHeight: (window.height) * 0.47,
         marginHorizontal: 20,
         borderRadius: 15,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginTop: (window.height) * 0.02
     },
     colorButtonListWrap: {
         marginTop: 20,
@@ -220,5 +250,23 @@ export const Styles = StyleSheet.create({
         flex: 0.2,
         flexDirection: 'row',
         justifyContent: 'space-evenly'
-    }
+    },
+
+    // View Todo
+
+    descriptionText: {
+        fontSize: 15,
+        fontFamily: Fonts.Bold,
+        color: Colors.darkFont,
+        textAlign: 'justify'
+    },
+    descriptionWrap: {
+        backgroundColor: Colors.notepad,
+        minHeight: (window.height) * 0.6,
+        marginHorizontal: 20,
+        borderRadius: 15,
+        padding: 10,
+        borderWidth: 1.5,
+        elevation: 10,
+    },
 });

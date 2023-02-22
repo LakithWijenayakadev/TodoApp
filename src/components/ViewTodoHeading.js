@@ -1,14 +1,11 @@
 import * as React from "react";
-import { TouchableOpacity, Text, View, Image, Dimensions } from "react-native";
+import {  Text, View, Image, Dimensions } from "react-native";
 import { Styles } from "../styles/Styles";
-import Logo from "./../logo/logo.png"
 import PencilIcon from "./../icons/pencil.png"
 import Colors from "../styles/Colors";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 const window = Dimensions.get('window');
-
-
 
 export default function ViewTodoHeading({ Topic, Color }) {
 
