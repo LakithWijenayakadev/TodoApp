@@ -92,6 +92,7 @@ function TodoList({ navigation }) {
         }).start();
     };
 
+
     function ThemeSwitch() {
 
         if (theme === 'light') {
@@ -112,6 +113,36 @@ function TodoList({ navigation }) {
             }, 500);
         }
     }
+
+    function Status(id, MarkStatus) {
+
+        // setIndicator(true);
+        const newArr = TodoListItems.map(obj => {
+            if (obj.id === id) {
+                return {
+                    ...obj,
+                    MarkStatus: !MarkStatus
+                };
+            }
+            return obj;
+        });
+
+        dispatch(SettodoListItems(newArr));
+
+
+    }
+    useEffect(() => {
+        saveToLocale();
+    }, [TodoListItems]);
+
+    const saveToLocale = async () => {
+        try {
+            await AsyncStorage.setItem('TodoList', JSON.stringify(TodoListItems));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     if (Indicator == true) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: theme === 'light' ? Colors.light : Colors.black }}>
@@ -141,12 +172,15 @@ function TodoList({ navigation }) {
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             data={TodoListItems}
+
                             fadingEdgeLength={30}
                             renderItem={({ item, index }) => <TodoItem
                                 Title={item.Topic}
                                 CreateDate={item.Date}
                                 Description={item.Description}
                                 SelectedColor={item.Color}
+                                Marked={item.MarkStatus}
+                                onPressMark={() => Status(item.id, item.MarkStatus)}
                                 onPress={() => viewTodo(TodoListItems[index])}
                             />
                             }

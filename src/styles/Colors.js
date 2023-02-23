@@ -8,7 +8,7 @@ const Colors = {
     darkFont: "#393E46",
     brown: "#8E806A",
     notepad: "#F8F0DF",
-
+    placeHolder: "#7F8487",
     //    TileColors
 
     lightGreen: "#7D9D9C",

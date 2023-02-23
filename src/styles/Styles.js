@@ -15,11 +15,15 @@ export const Styles = StyleSheet.create({
         backgroundColor: Colors.light
     },
     logo: {
+
+
         height: 50,
         width: 50,
         borderRadius: 100
     },
     appName: {
+
+
         marginHorizontal: 10,
         fontSize: 50,
         color: Colors.darkFont,
@@ -37,7 +41,7 @@ export const Styles = StyleSheet.create({
     fab: {
         position: 'absolute',
         margin: 16,
-        right: 12,
+        left: 12,
         bottom: 0,
         backgroundColor: "#525E75"
     },
@@ -158,7 +162,7 @@ export const Styles = StyleSheet.create({
     TodoListheadingMain: {
         height: 100,
         justifyContent: 'center',
-        paddingHorizontal: 20,
+
         marginTop: (window.height) * 0.05
     },
     headingSubWrap: {

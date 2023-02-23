@@ -80,7 +80,8 @@ function CreateTodo({ navigation }) {
             Description: descriptin,
             Date: date,
             Color: ColorList[SelectedIndex].Color,
-            ColorIndex: SelectedIndex
+            ColorIndex: SelectedIndex,
+            MarkStatus: false
         };
 
         dispatch(SettodoListItems([newDataArray].concat(TodoListItems)));
@@ -118,9 +119,9 @@ function CreateTodo({ navigation }) {
                 {ColorList.map((item, index) => (
 
                     <TouchableOpacity onPress={() => handleColor(index)}
-                        style={[Styles.colorButtons, { borderColor: SelectedIndex == index ? Colors.orange : item.Color}]}>
+                        style={[Styles.colorButtons, { borderColor: SelectedIndex == index ? Colors.orange : item.Color }]}>
                         <View style={
-                            [Styles.selectColor,{backgroundColor: item.Color}]
+                            [Styles.selectColor, { backgroundColor: item.Color }]
                         }></View>
                     </TouchableOpacity>
 
@@ -156,6 +157,7 @@ function CreateTodo({ navigation }) {
                                 multiline
                                 value={topic}
                                 numberOfLines={2}
+                                placeholderTextColor={Colors.placeHolder}
                                 autoFocus={true}
                                 maxLength={50}
                                 onChangeText={(value) => handleTopic(value)}
@@ -167,6 +169,7 @@ function CreateTodo({ navigation }) {
                             <TextInput
                                 placeholder="Type your content here..."
                                 multiline
+                                placeholderTextColor={Colors.placeHolder}
                                 value={descriptin}
                                 scrollEnabled={false}
                                 onChangeText={(value) => handleDescription(value)}

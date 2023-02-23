@@ -161,6 +161,7 @@ function UpdateTodo({ navigation }) {
                                 placeholder="Type your topic here..."
                                 multiline
                                 value={topic}
+                                placeholderTextColor={Colors.placeHolder}
                                 numberOfLines={2}
                                 maxLength={50}
                                 onChangeText={(value) => handleTopic(value)}
@@ -174,6 +175,7 @@ function UpdateTodo({ navigation }) {
                                 placeholder="Type your content here..."
                                 multiline
                                 value={descriptin}
+                                placeholderTextColor={Colors.placeHolder}
                                 scrollEnabled={false}
                                 onChangeText={(value) => handleDescription(value)}
                                 style={Styles.descriptionInput}></TextInput>

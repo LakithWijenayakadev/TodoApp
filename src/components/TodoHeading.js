@@ -14,10 +14,19 @@ export default function TodoHeading({ onPress, opacity }) {
 
     return (
         <View style={Styles.TodoListheadingMain}>
+
             <View style={Styles.headingSubWrap}>
-                <Image source={Logo} style={Styles.logo}></Image>
-                <Text style={[Styles.appName, { color: theme == 'light' ? Colors.darkFont : Colors.light }]}>Todo..!</Text>
-                <View style={{ height: 20, width: 20, marginLeft: (window.width) * 0.18 }}>
+                <View style={{ flex: 0.2, alignItems: 'flex-end' }}>
+                    <Image source={Logo} style={Styles.logo}></Image>
+                </View>
+
+                <View style={{ flex: 0.57, alignItems: 'flex-start' }}>
+                    <Text style={[Styles.appName, { color: theme == 'light' ? Colors.darkFont : Colors.light }]}>Todo..!</Text>
+
+                </View>
+                <View style={{
+                    alignItems: 'center', flex: 0.23
+                }}>
                     <TouchableOpacity
                         activeOpacity={1}
                         onPress={onPress}
@@ -40,6 +49,7 @@ export default function TodoHeading({ onPress, opacity }) {
                     </TouchableOpacity>
                 </View>
             </View>
+
             <View style={{ alignItems: 'center' }}>
                 <Text style={[Styles.subTopic, { color: theme == 'light' ? Colors.darkFont : Colors.light }]}>Manage your daily busy life{'\n'}without any hassle.</Text>
             </View>

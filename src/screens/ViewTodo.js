@@ -10,6 +10,8 @@ import { SettodoListItems, SethaveTodos } from './../../redux/TodoListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Settopic, Setdescriptin, Setcolor, SetupdateId, Setdate, SetSelectedIndex, SetupdateItem } from './../../redux/CreateTodoSlice';
 import { ActivityIndicator } from "react-native-paper";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Fonts from "../styles/Fonts";
 
 
 function ViewTodo({ navigation }) {
@@ -64,7 +66,7 @@ function ViewTodo({ navigation }) {
 
     useEffect(() => {
         saveToLocale();
-        console.log("leng", TodoListItems.length)
+
         if (TodoListItems.length == 0) {
             dispatch(SethaveTodos(false))
         }
@@ -110,8 +112,20 @@ function ViewTodo({ navigation }) {
                         </View>
 
                     </View>
-                    <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20 }}>
-
+                    <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20 }}>
+                        <View style={{ flex: 0.5, flexDirection: 'row', alignItems: 'center' }}>
+                            <MaterialCommunityIcons
+                                name={TodoItem.MarkStatus === true ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"}
+                                size={30}
+                                color={theme === "light" ? Colors.darkBlue : Colors.darkBlue}
+                            />
+                            <Text style={{
+                                fontFamily: Fonts.Bold,
+                                fontSize: 18,
+                                marginLeft: 3,
+                                color: theme === 'light' ? Colors.darkFont : Colors.light
+                            }}>{TodoItem.MarkStatus === true ? "Completed" : "Incomplete"}</Text>
+                        </View>
                         <View style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                             <TouchableOpacity onPress={() => updateItem()} style={Styles.pencilIcon}>
                                 <Image source={PencilIcon} style={Styles.smallPencil}></Image>
